@@ -35,20 +35,22 @@ class Navbar extends React.Component {
                 navState: navOff
             })
         }
-        
-        console.log('toggle')
-
     }
-    
+
+    scroll() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    }
+
     render() {
         return (
             <div>
                 <nav className={"navbar"} id={'nav-'+this.props.mode}> 
                     <div className='nav-links'>
-                        <header id="top"  className='header'> 
-                            <a href="#article-container-darktop" className="page-title"> Stock Info   </a>
-                        </header>
-                        <a id="nav-link" href="#chart" > Chart </a>
+                        <a href="#" onClick={console.log('click')} className="header"> Stock Info   </a>
+                        <a id="nav-link" href="#StockTitle" > Chart </a>
                         <a id="nav-link" href="#info" > Info </a>
                         <a id="nav-link" href="#news" > News </a>
                     </div>

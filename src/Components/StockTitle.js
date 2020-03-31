@@ -6,7 +6,7 @@ const StockTitle = props => (
 
 
 
-    <div>
+    <div id="StockTitle" name="StockTitle">
         {props.symbol &&
         <div className='price-bar' id={'price-bar-'+props.mode}>
             {props.symbol && <div>

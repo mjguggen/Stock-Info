@@ -11,11 +11,9 @@ const showPlaceholder = (event) => {
 
 const Form = props => (
 
-
-
     <form onSubmit={props.getTicker} className='form-container'>
         
-        <input type="text" name="ticker" placeholder="Enter Ticker (Ex: AAPL)" className="input-nav" id={"input-mode-"+props.mode} onFocus={hidePlaceholder} onBlur={showPlaceholder}></input>
+        <input type="text" name="ticker" placeholder="Enter Ticker (Ex: TWTR)" className="input-nav" id={"input-mode-"+props.mode} onFocus={hidePlaceholder} onBlur={showPlaceholder}></input>
         <button className="button-nav">+</button>
     </form>
 );

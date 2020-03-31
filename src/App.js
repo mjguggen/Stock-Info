@@ -115,12 +115,12 @@ class App extends React.Component {
     } else {
         this.setState({
           articles: data2.articles.map((i,index) => (               
-            <div className='news-container'>
-                <a className='article-container' id={'article-container-'+this.state.mode} key={index} href={i.url } target="_blank">
-                    <p className="article-source"> { i.source.name } </p> 
-                    <p className="article-title"> { i.title } </p> 
+            <div className='news-container' key={index}>
+                <a className='article-container' id={'article-container-'+this.state.mode} key={i.url} href={i.url } target="_blank">
+                    <p className="article-source" key={i.source.name}> { i.source.name } </p> 
+                    <p className="article-title" key={i.title}> { i.title } </p> 
                     <div className='article-info'>
-                        <p className="article"> { i.description } </p> 
+                        <p className="article" key={i.description}> { i.description } </p> 
                     </div>
                 </a>
             </div>)
@@ -134,7 +134,7 @@ class App extends React.Component {
       });
     }
 
-    if (data["Message"] == "Error! The requested stock(s) could not be found.") {
+    if (data["Message"] === "Error! The requested stock(s) could not be found.") {
       this.setState({
         name: undefined,
         symbol: undefined,
@@ -179,7 +179,7 @@ class App extends React.Component {
     return (
       <div className="app" style={this.state.bg}>
 
-        <div className='wrapper' id={'wrapper-'+this.state.mode}>
+        <div className='wrapper' id={'wrapper-'+this.state.mode} name="top">
 
             <Navbar
               changeMode={this.changeMode}
@@ -211,6 +211,7 @@ class App extends React.Component {
               <div className="row">
                 <div className="col">
                 <StockTitle 
+  
                   mode={this.state.mode}
                   getTicker={this.getTicker}
                   name={this.state.name} 
