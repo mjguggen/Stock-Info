@@ -9,7 +9,6 @@ const Enter = (props) => {
 
     const showPlaceholder = (event) => {
         event.target.placeholder = "Enter Ticker"
-        console.log(event.target)
     }
 
 
