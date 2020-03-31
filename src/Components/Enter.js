@@ -5,7 +5,6 @@ const Enter = (props) => {
 
     const hidePlaceholder = (event) => {
         event.target.placeholder = ""
-        console.log(event.target)
     }
 
     const showPlaceholder = (event) => {
@@ -32,7 +31,7 @@ const Enter = (props) => {
                     <div className="enter"> 
                         <div className={"enter-"+props.mode}>
                             <form onSubmit={props.getTicker}>
-                            <input type="text" name="ticker" placeholder="Enter a Valid Ticker" className="enter-input" id={"enter-input-"+props.mode} onFocus={hidePlaceholder} onBlur={showPlaceholder}></input>
+                            <input type="text" name="ticker" placeholder="Ticker Not Valid" className="enter-input" id={"enter-input-"+props.mode} onFocus={hidePlaceholder} onBlur={showPlaceholder}></input>
                             </form>
                         </div>
                     </div> : (<div /> )

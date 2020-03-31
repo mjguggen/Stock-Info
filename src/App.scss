@@ -7,7 +7,7 @@ $text-positive: #2FC48D;
 $text-negative: #e54012;
 $background-dark: #1B1B1D;
 $background-light: white;
-
+$mode-transition: .2s;
 
 body {
   font-family: 'Archivo', sans-serif;
@@ -17,18 +17,22 @@ body {
   width: 100%;
   height: 100%;
   position: fixed;
-  top: 55px;
+  top: 0px;
   left: 0px;
+  padding-top: 55px;
+  padding-bottom: 55px;
   overflow: scroll;
-
+  overflow-x: hidden
 }
 
 #wrapper-light {
   background-color: $background-light;
+  transition: background-color $mode-transition;
 }
 
 #wrapper-dark {
   background-color: $background-dark;
+  transition: background-color $mode-transition;
 }
 
 
@@ -47,8 +51,10 @@ a:hover {
 
 .enter-wrapper {
   font-family: 'Archivo', sans-serif;
-  height: 100vh;
-  width: 100%;
+  height: 80%;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,7 +65,7 @@ a:hover {
   position: absolute;
   top:0;
   padding-top: 30vh;
-
+//  width: 300px;
 }
 
 .enter-light {
@@ -68,7 +74,7 @@ a:hover {
 }
 
 .enter-dark {
-  color: $text-dark
+  color: $text-dark;
 }
 
 //Nav
@@ -88,11 +94,13 @@ a:hover {
 
 #nav-light {
   background-color: $background-light;
+  transition: background-color $mode-transition;
   color: $text-light;
 }
 
 #nav-dark {
   background-color: $background-dark;
+  transition: background-color $mode-transition;
   color: $text-dark;
 }
 
@@ -157,13 +165,41 @@ a:hover {
 
 #navlinksmobilewrapper-light {
   background-color: $background-light;
+  transition: background-color $mode-transition;
   color: $text-light
 }
 
 #navlinksmobilewrapper-dark {
   background-color: $background-dark;
+  transition: background-color $mode-transition;
   color: $text-dark
 }
+
+//Scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  box-shadow: inset 0 0 3px #a0a0a0;
+  opacity: .5;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a5a5a5; 
+}
+
+
 
 @media only screen and (max-width: 710px) {
 
@@ -196,7 +232,6 @@ a:hover {
     padding-bottom: 5px;
     display: block;
   }
-
 }
 
 //Nav Form
@@ -419,10 +454,12 @@ a:hover {
 
 .stock-data-border-light {
   background-color: $background-dark;
+  transition: background-color $mode-transition;
 }
 
 .stock-data-border-dark {
   background-color: $background-light;
+  transition: background-color $mode-transition;
 }
 
 .technical-analysis {
@@ -522,35 +559,30 @@ a:hover {
 }
 
 //Footer
-.ticker-tape-light {
-  clip-path: inset(0 0 70% 0);
-  display: flex;
-  justify-content: center;
+.footer {
+  width: 100%;
+  height: 55px;
   position: fixed;
   left: 0;
   bottom: 0;
-  padding-right: 40px;
-  padding-bottom: 120px;
-  margin-bottom: -141px;
-  width: 100%;
-  background-color: $background-light;
   z-index: 9;
+  display: block;
+  background-color: $background-light;
+  transition: background-color $mode-transition;
 }
 
-.ticker-tape-dark {
-  clip-path: inset(0 0 50% 0);
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  padding-bottom: 120px;
-  margin-bottom: -141px;
-  padding-right: 40px;
-  width: 100%;
+#footer-dark {
   background-color: $background-dark;
-  z-index: 9;
+  transition: background-color $mode-transition;
 }
+
+.ticker-tape {
+  clip-path: inset(0 40px 0 0);
+  width: 100%;
+}
+
+
+
 
 //Mode Select
 .checkbox-container {
@@ -643,6 +675,7 @@ input[type="checkbox"]{
   height: 18px;
   width: 18px;
   background-color: $background-light;
+  transition: background-color $mode-transition;
   position: absolute;
   top: 4px;
   left: 4px;
@@ -728,7 +761,8 @@ input[type="checkbox"]{
     padding-right: 20px;
     width: 100%;
     z-index: 99;
-    background-color: $background-light
+    background-color: $background-light;
+    transition: background-color $mode-transition;
   }
 
   .ticker-tape-dark {
@@ -740,7 +774,8 @@ input[type="checkbox"]{
     padding-right: 20px;
     width: 100%;
     z-index: 99;
-    background-color: $background-dark
+    background-color: $background-dark;
+    transition: background-color $mode-transition;
   }
 
   //Mode Selector
@@ -856,6 +891,7 @@ input[type="checkbox"]{
   
   .stock-data-border {
     background-color: $background-dark;
+    transition: background-color $mode-transition;
     width: 1px;
     border-radius: 10%;
     margin-top: 4px;

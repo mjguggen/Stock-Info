@@ -178,16 +178,19 @@ class App extends React.Component {
   render() {
     return (
       <div className="app" style={this.state.bg}>
-          <Navbar
-            changeMode={this.changeMode}
-            modeChanger={this.modeChanger}
-            mode={this.state.mode}
-            getTicker={this.getTicker} 
-            mode={this.state.mode}
-          />
-          
+
         <div className='wrapper' id={'wrapper-'+this.state.mode}>
 
+            <Navbar
+              changeMode={this.changeMode}
+              modeChanger={this.modeChanger}
+              mode={this.state.mode}
+              getTicker={this.getTicker} 
+              mode={this.state.mode}
+            />
+            <Footer
+              mode={this.state.mode}
+            />
 
           <div className="main">
             <ModeChanger
@@ -196,9 +199,7 @@ class App extends React.Component {
               mode={this.state.mode}
             />
 
-            <Footer
-              mode={this.state.mode}
-            />
+
 
             <Enter
               name={this.state.name}
