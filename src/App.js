@@ -15,8 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const WORLDTRADINGDATA_API_KEY = "2HhczAOftfU2TiYMAJepZcz5JrUVOVGlpLleKt9ZnGlyKvokZniHKmmBDvYD";
 const WORLDTRADINGDATA_API_KEY2 = "C7pRFbXZRf9nVgqvcoGzdKfsR0zex2TsoR9tJ1Qlimo6NbYitsBOrOjJU4DS";
 const NEWS_API_KEY = "51cbba44e78c467ba6c8352767d4e971"
-const ALPHAVANTAGE_API_Key = "O11EQ8J01EQY0UZ1"
-
 
 
 class App extends React.Component {
@@ -84,7 +82,7 @@ class App extends React.Component {
           mktCap:undefined,
           avgVol:undefined,
           eps:undefined,
-          error: "Enter valid ticker"
+          error: "invalid"
         });
     } else {
         this.setState({
@@ -116,8 +114,6 @@ class App extends React.Component {
         });
     } else {
         this.setState({
-//          articles: articlesArr,
-
           articles: data2.articles.map((i,index) => (               
             <div className='news-container'>
                 <a className='article-container' id={'article-container-'+this.state.mode} key={index} href={i.url } target="_blank">
@@ -150,7 +146,7 @@ class App extends React.Component {
         exchange: undefined,
         daychange: undefined,
         changepct: undefined,
-        error: "Enter valid ticker"
+        error: "invalid"
       });
     }
 

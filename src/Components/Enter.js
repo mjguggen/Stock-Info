@@ -21,9 +21,6 @@ const Enter = (props) => {
                     {props.error === undefined &&
                     <div className="enter"> 
                         <div className={"enter-"+props.mode}>
-                            {/* 
-                            <h1 > Enter a Ticker </h1>  
-                            */}
                             <form onSubmit={props.getTicker}>
                             <input type="text" name="ticker" placeholder="Enter Ticker" className="enter-input" id={"enter-input-"+props.mode} onFocus={hidePlaceholder} onBlur={showPlaceholder}></input>
                             </form>
@@ -31,14 +28,14 @@ const Enter = (props) => {
                     </div>
                     }
 
-                    {props.error !== "valid" ? (
+                    {props.error === "invalid" ? 
                     <div className="enter"> 
                         <div className={"enter-"+props.mode}>
-                            <h2> {props.error} </h2>  
+                            <form onSubmit={props.getTicker}>
+                            <input type="text" name="ticker" placeholder="Enter a Valid Ticker" className="enter-input" id={"enter-input-"+props.mode} onFocus={hidePlaceholder} onBlur={showPlaceholder}></input>
+                            </form>
                         </div>
-                    </div> ) : (
-                        <div /> 
-                    )
+                    </div> : (<div /> )
                     }
                 </div>
             ) : <div/>
