@@ -49,7 +49,7 @@ class Navbar extends React.Component {
             <div>
                 <nav className={"navbar"} id={'nav-'+this.props.mode}> 
                     <div className='nav-links'>
-                        <a href="#" onClick={console.log('click')} className="header"> Stock Info   </a>
+                        <a href="#" className="header"> Stock Info   </a>
                         <a id="nav-link" href="#StockTitle" > Chart </a>
                         <a id="nav-link" href="#info" > Info </a>
                         <a id="nav-link" href="#news" > News </a>

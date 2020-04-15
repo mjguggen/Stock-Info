@@ -30,7 +30,7 @@ const StockData = (props) => (
             <div className={"stock-data-values-"+props.mode} id="stock-data-values">
                 <p> {props.open} </p>
                 <p> {props.dayHigh} </p>
-                <p> {props.dayLow} </p>
+                <p> {props.dayLow.toFixed(2)} </p>
             </div>
 
             <div className={"stock-data-border-"+props.mode} id="stock-data-border" />
@@ -42,8 +42,8 @@ const StockData = (props) => (
             </div>
 
             <div className={"stock-data-values-"+props.mode} id="stock-data-values">
-                <p> {props.pe} </p>
-                <p> {props.eps} </p>
+                <p> {props.pe.toFixed(2)} </p>
+                <p> {props.eps.toFixed(2)} </p>
                 <p> {makeNumNormal(props.mktCap)} </p>
             </div>
 
@@ -59,8 +59,8 @@ const StockData = (props) => (
 
             <div className={"stock-data-values-"+props.mode} id="stock-data-values">
                 <p> {props.yearHigh} </p>
-                <p> {props.yearLow} </p>
-                <p> {makeNumNormal(props.avgVol)} </p>
+                <p> {props.yearLow.toFixed(2)} </p>
+                <p> {makeNumNormal(props.avgVol.toFixed(2))} </p>
             </div>
 
             <div className={"stock-data-border-"+props.mode} id="stock-data-border"/>

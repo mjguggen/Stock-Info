@@ -12,8 +12,9 @@ import Profile from './Components/Profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const WORLDTRADINGDATA_API_KEY = "2HhczAOftfU2TiYMAJepZcz5JrUVOVGlpLleKt9ZnGlyKvokZniHKmmBDvYD";
-const WORLDTRADINGDATA_API_KEY2 = "C7pRFbXZRf9nVgqvcoGzdKfsR0zex2TsoR9tJ1Qlimo6NbYitsBOrOjJU4DS";
+//const WORLDTRADINGDATA_API_KEY = "2HhczAOftfU2TiYMAJepZcz5JrUVOVGlpLleKt9ZnGlyKvokZniHKmmBDvYD";
+//const WORLDTRADINGDATA_API_KEY2 = "C7pRFbXZRf9nVgqvcoGzdKfsR0zex2TsoR9tJ1Qlimo6NbYitsBOrOjJU4DS";
+const FINNHUB_KEY = "bojkqfvrh5rcji5m3e2g"
 const NEWS_API_KEY = "51cbba44e78c467ba6c8352767d4e971"
 
 
@@ -42,6 +43,11 @@ class App extends React.Component {
     mktCap:undefined,
     avgVol:undefined,
     eps:undefined,
+    dividendYield: undefined,
+    beta: undefined,
+
+
+
     error: undefined,
 
     articles: undefined,
@@ -57,15 +63,39 @@ class App extends React.Component {
 
   getTicker = async (e) => {
     e.preventDefault();
-    const ticker = e.target.elements.ticker.value;
-    const api_call = await fetch(`https://api.worldtradingdata.com/api/v1/stock?symbol=${ticker}&api_token=${WORLDTRADINGDATA_API_KEY}`);
-    const api_call2 = await fetch(`https://newsapi.org/v2/everything?q=${ticker}&apiKey=${NEWS_API_KEY}`);
-    const data = await api_call.json();
-    const data2 = await api_call2.json();
+    const ticker = e.target.elements.ticker.value.toUpperCase();
+//    const api_call = await fetch(`https://api.worldtradingdata.com/api/v1/stock?symbol=${ticker}&api_token=${WORLDTRADINGDATA_API_KEY}`);
+
+    const companyCall = await fetch(`https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bojkqfvrh5rcji5m3e2g`);
+    const companyCallData = await companyCall.json()
+
+    const companyName = () => {
+      for(let i = 0; i < companyCallData.length; i++) {
+        if (ticker === companyCallData[i].symbol) {
+          return companyCallData[i].description
+        }
+      }
+    }
+
+
+    const priceCall = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${FINNHUB_KEY}`)
+    const priceData = await priceCall.json();
+
+    const yearCall = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=price&token=${FINNHUB_KEY}`)
+    const yearData = await yearCall.json()
+
+    const valuationCall = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=valuation&token=${FINNHUB_KEY}`)
+    const valuationData = await valuationCall.json()
+
+    const perShareCall = await fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=perShare&token=${FINNHUB_KEY}`)
+    const perShareData = await perShareCall.json()
+
+    const newsCall = await fetch(`https://newsapi.org/v2/everything?q=${ticker}&apiKey=${NEWS_API_KEY}`);
+    const newsData = await newsCall.json();
 
     if (ticker) {
-      if (data["Message"] == "Error! The requested stock(s) could not be found.") {
-        this.setState({
+      if (ticker === false) {
+        await this.setState({
           name: undefined,
           symbol: undefined,
           price: undefined,
@@ -85,36 +115,39 @@ class App extends React.Component {
           error: "invalid"
         });
     } else {
-        this.setState({
-          name: data.data[0].name,
-          symbol: data.data[0].symbol,
-          price: data.data[0].price,
-          closeYesterday: data.data[0]["close_yesterday"],
-          pe: data.data[0].pe,
-          yearHigh: data.data[0]["52_week_high"],
-          yearLow: data.data[0]["52_week_low"],
-          exchange: data.data[0]["stock_exchange_short"],
-          daychange: data.data[0]["day_change"],
-          changepct: data.data[0]["change_pct"],
-          open: data.data[0]["price_open"],
-          dayHigh: data.data[0]["day_high"],
-          dayLow: data.data[0]["day_low"],
-          mktCap: data.data[0]["market_cap"],
-          avgVol: data.data[0]["volume_avg"],
-          eps: data.data[0]["eps"],
+        await this.setState({
+          name: companyName(),
+          symbol: ticker,
+          price: priceData.c,
+          closeYesterday: priceData.pc,
+          pe: valuationData.metric.peBasicExclExtraTTM,
+          yearHigh: yearData.metric["52WeekHigh"],
+          yearLow: yearData.metric["52WeekLow"],
+//          exchange: data.data[0]["stock_exchange_short"],
+          daychange: (priceData.c - priceData.pc).toFixed(2),
+          changepct: (((priceData.c - priceData.pc)/priceData.pc)*100).toFixed(2),
+          open: priceData.o,
+          dayHigh: priceData.h,
+          dayLow: priceData.l,
+          mktCap: (yearData.metric.marketCapitalization)*1000000,
+          avgVol: yearData.metric["10DayAverageTradingVolume"]*1000000,
+          eps: perShareData.metric.epsInclExtraItemsTTM,
+          dividendYield: yearData.metric.currentDividendYieldTTM,
+          beta: yearData.metric.beta,
+
           error: "valid"
         });
       }
     }
 
     if (ticker) {
-      if (data["Message"] == "Error! The requested stock(s) could not be found.") {
+      if (ticker === false) {
         this.setState({
           articles: undefined,
         });
     } else {
         this.setState({
-          articles: data2.articles.map((i,index) => (               
+          articles: newsData.articles.map((i,index) => (               
             <div className='news-container' key={index}>
                 <a className='article-container' id={'article-container-'+this.state.mode} key={i.url} href={i.url } target="_blank">
                     <p className="article-source" key={i.source.name}> { i.source.name } </p> 
@@ -134,7 +167,7 @@ class App extends React.Component {
       });
     }
 
-    if (data["Message"] === "Error! The requested stock(s) could not be found.") {
+    if (ticker === false) {
       this.setState({
         name: undefined,
         symbol: undefined,
